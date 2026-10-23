@@ -1,0 +1,11 @@
+target/
+*.class
+*.war
+*.log
+.DS_Store
+Testing/
+Testing */
+.settings/
+.idea/
+*.iml
+scratch/
