@@ -1,0 +1,7 @@
+target/
+.git/
+.gitignore
+.vscode/
+Testing/
+*.DS_Store
+*.md
