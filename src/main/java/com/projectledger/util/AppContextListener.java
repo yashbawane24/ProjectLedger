@@ -15,7 +15,12 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        LOGGER.info("ProjectLedger web application initialized.");
+        LOGGER.info("ProjectLedger web application initialized. Pre-warming database connection pool...");
+        try (java.sql.Connection conn = DatabaseConnection.getConnection()) {
+            LOGGER.info("Database connection pool warmed up successfully.");
+        } catch (Exception e) {
+            LOGGER.log(java.util.logging.Level.WARNING, "Database pool pre-warm encountered: " + e.getMessage());
+        }
     }
 
     @Override

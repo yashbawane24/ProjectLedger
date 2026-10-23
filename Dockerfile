@@ -18,8 +18,14 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Disable Tomcat shutdown listener port so cloud proxies and health checks only target the web connector
 RUN sed -i 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
 
+# Enable HTTP GZIP compression on Tomcat connector (compresses HTML, CSS, JS, JSON payloads by ~80%)
+RUN sed -i 's/<Connector port="8080"/<Connector port="8080" compression="on" compressionMinSize="1024" compressableMimeType="text\/html,text\/xml,text\/plain,text\/css,text\/javascript,application\/javascript,application\/json"/' /usr/local/tomcat/conf/server.xml
+
 # Deploy project as the ROOT application
 COPY --from=builder /build/target/projectledger.war /usr/local/tomcat/webapps/ROOT.war
+
+# JVM tuning for container performance & fast non-blocking entropy
+ENV CATALINA_OPTS="-XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=40.0 -Djava.security.egd=file:/dev/./urandom"
 
 EXPOSE 8080
 

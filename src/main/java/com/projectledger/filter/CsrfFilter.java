@@ -38,6 +38,17 @@ public class CsrfFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
+        String contextPath = request.getContextPath();
+        String uri = request.getRequestURI();
+        String path = uri.substring(contextPath.length());
+
+        // Skip static assets entirely from CSRF checks, avoid creating unnecessary sessions, and enable browser caching
+        if (path.startsWith("/assets/")) {
+            response.setHeader("Cache-Control", "public, max-age=604800, immutable");
+            chain.doFilter(request, response);
+            return;
+        }
+
         // Transfer any flash messages from session to request scope
         Flash.transferToRequest(request);
 
