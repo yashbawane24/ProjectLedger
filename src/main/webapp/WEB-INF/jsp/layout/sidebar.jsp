@@ -178,14 +178,6 @@
             </c:when>
         </c:choose>
     </nav>
-
-    <!-- Final Submission Forest Card in Sidebar (Exact Image 2) -->
-    <div class="sidebar-submission-card">
-        <div class="sidebar-sub-label">Final submission</div>
-        <div class="sidebar-sub-date">14 Nov 2026</div>
-        <div class="sidebar-sub-days">in 22 days</div>
-        <a href="${pageContext.request.contextPath}/student/dashboard?section=deadlines" class="sidebar-sub-btn">View deadlines</a>
-    </div>
 </aside>
 
 <!-- Main Content Area with Modern Top Header Bar -->
